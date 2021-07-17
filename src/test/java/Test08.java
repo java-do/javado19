@@ -1,23 +1,35 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("Streamの拡張")
+@DisplayName("Optionalの拡張例")
 public class Test08 {
 
   @Test
-  @DisplayName("Streamの結果をimmutableListで取得する")
+  @DisplayName("Nullじゃないときのアクション")
   void case01() {
-    List<Integer> origList = List.of(2, 3, 4, 5);
-    List<Double> powList = origList.stream()
-      .map(i -> Math.pow(i, 2))
-      .toList();
+    String message = "値は %s".formatted(print("Duke"));
 
-    assertThat(powList).containsExactly(4d, 9d, 16d, 25d);
+    assertThat(message).isEqualTo("値は Duke");
+//    fail();
   }
 
+  @Test
+  @DisplayName("Nullじゃないときのアクション")
+  void case02() {
+    String message = "値は %s".formatted(print(null));
+
+    assertThat(message).isEqualTo("値は 初期値");
+//    fail();
+  }
+
+  String print(String str) {
+    return Optional.ofNullable(str)
+      .or(() -> Optional.of("初期値"))
+      .get();
+  }
 
 }

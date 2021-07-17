@@ -1,36 +1,38 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpClient.Redirect;
+import java.net.http.HttpClient.Version;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
+import java.time.Duration;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("Stringの拡張")
+@DisplayName("HTTPClient")
 public class Test05 {
 
   @Test
-  @DisplayName("たとえば、Srtring Format")
-  void case01() {
-    String greeting = "Hello, %s %s !".formatted("Higuma", "Duke");
+  @DisplayName("首相官邸のHTMLを文字列で取得する")
+  void case01() throws IOException, InterruptedException {
+    HttpClient client = HttpClient.newBuilder()
+      .version(Version.HTTP_1_1)
+      .followRedirects(Redirect.NORMAL)
+      .connectTimeout(Duration.ofSeconds(20))
+      .build();
 
-    assertThat(greeting).isEqualTo("Hello, Higuma Duke !");
+    HttpRequest request = HttpRequest.newBuilder()
+      .uri(URI.create("https://www.kantei.go.jp"))
+      .GET()
+      .build();
+
+    // 本来は例外処理が必要
+    HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+    assertThat(response.body()).contains("首相官邸のホームページです。");
 //    fail();
   }
-
-  @Test
-  @DisplayName("たとえば、Srtring transform")
-  void case02() {
-    String message = "Hello, Higuma Duke !";
-    String digest = message.transform(s -> digest(s));
-
-    assertThat(digest).isEqualTo("Hello...");
-//    fail();
-  }
-
-  private String digest(String str) {
-    if (str.length() > 5) {
-      return str.substring(0, 5) + "...";
-    }
-    return str;
-  }
-
-
 }

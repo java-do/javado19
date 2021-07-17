@@ -1,49 +1,36 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.entry;
 
-@DisplayName("Collectionの拡張例")
+@DisplayName("Stringの拡張")
 public class Test06 {
 
   @Test
-  @DisplayName("of メソッドでイミュータブルなList, Set, Mapなどを作れる")
+  @DisplayName("たとえば、Srtring Format")
   void case01() {
-    List<String> alphabetList = List.of("a", "b", "c");
-    // イミュータブルなリストなので、要素後から変更できない
-    // alphabetList.add("z");
+    String greeting = "Hello, %s %s !".formatted("Higuma", "Duke");
 
-    Set<String> alphabetSet = Set.of("d", "e", "f");
-    // 同上
-    // alphabetSet.add("z");　
-
-    Map<String, String> alphabetMap =
-      Map.of("g", "ジー", "h", "エイチ", "i", "アイ");
-    // 同上
-    //  alphabetMap.put("z", "ゼット");
-
-    assertThat(alphabetList).contains("a", "b", "c");
-    assertThat(alphabetSet).contains("d", "e", "f");
-    assertThat(alphabetMap).contains(entry("g", "ジー"), entry("h", "エイチ"), entry("i", "アイ"));
+    assertThat(greeting).isEqualTo("Hello, Higuma Duke !");
+//    fail();
   }
 
   @Test
-  @DisplayName("copyOf メソッドでイミュータブルなList, Set, Mapなどを複写できる")
+  @DisplayName("たとえば、Srtring transform")
   void case02() {
-    List<String> mutable = new ArrayList<>();
-    mutable.add("a");
-    mutable.add("b");
-    mutable.add("c");
+    String message = "Hello, Higuma Duke !";
+    String digest = message.transform(s -> digest(s));
 
-    List<String> immutableCopy = List.copyOf(mutable);
-    // イミュータブルなリストなので、要素を後から変更できない
-    // imutableList.add("z");
-    assertThat(immutableCopy).containsExactly("a", "b", "c");
+    assertThat(digest).isEqualTo("Hello...");
+//    fail();
   }
+
+  private String digest(String str) {
+    if (str.length() > 5) {
+      return str.substring(0, 5) + "...";
+    }
+    return str;
+  }
+
+
 }

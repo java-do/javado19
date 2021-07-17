@@ -1,43 +1,28 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import test02.ParisClock;
+import test02.TokyoClock;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.time.ZonedDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
-@DisplayName("ローカル変数をvarで定義する")
+@DisplayName("インターフェースの default, private メソッド")
 public class Test03 {
 
-
   @Test
-  @DisplayName("ローカル変数をvarで定義する例1")
+  @DisplayName("パリ時間が表示される")
   void case01() {
-    var greeting = "Hello, Higuma Duke!";
-
-    assertThat(greeting.length()).isEqualTo(19);
+    ZonedDateTime parisTime = new ParisClock().getZonedTime();
+    assertThat(parisTime.toString()).contains("+02:00");
 //    fail();
   }
 
   @Test
-  @DisplayName("ローカル変数をvarで定義する例2")
+  @DisplayName("日本時間が表示される")
   void case02() {
-    var actual = new Random().nextInt(10);
-
-    assertThat(actual).isBetween(0, 9);
-//    fail();
-  }
-
-  @Test
-  @DisplayName("ローカル変数をvarで定義する例3")
-  void case03() {
-    var actual = new ArrayList<String>();
-    actual.add("a");
-    actual.add("b");
-    actual.add("c");
-
-    assertThat(actual).contains("a", "b", "c");
+    ZonedDateTime tokyoTime = new TokyoClock().getZonedTime();
+    assertThat(tokyoTime.toString()).contains("+09:00");
 //    fail();
   }
 
