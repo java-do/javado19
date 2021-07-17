@@ -16,7 +16,7 @@ public class Test01 {
 
   @BeforeEach
   void beforeEach() throws IOException {
-    in = Objects.requireNonNull(getClass().getResource("Read.txt")).openStream();
+    in = Objects.requireNonNull(getClass().getResourceAsStream("Read.txt"));
   }
 
   @Test
