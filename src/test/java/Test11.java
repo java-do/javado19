@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import test11.Rank;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
