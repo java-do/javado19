@@ -7,4 +7,8 @@ public class ParisClock implements WorldClock {
     return "ECT";
   }
 
+  // instance of のデモで使う存在意義の薄い固有メソッド
+  public String paris() {
+    return "パリはフランスにあります.";
+  }
 }
