@@ -1,5 +1,6 @@
 package test14;
 
+// 継承する側はfinalになる
 public final class NGButton extends Button {
 
   @Override
