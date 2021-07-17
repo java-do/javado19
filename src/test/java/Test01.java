@@ -16,7 +16,7 @@ public class Test01 {
 
   @BeforeEach
   void beforeEach() throws IOException {
-    in = Objects.requireNonNull(getClass().getResource("Read.txt")).openStream();
+    in = Objects.requireNonNull(getClass().getResourceAsStream("Read.txt"));
   }
 
   @Test
@@ -30,6 +30,7 @@ public class Test01 {
     String actual = scanner.toString();
     // close していないので、Scanner(とInputStream）がOpenのまま
     assertThat(actual).contains("source closed=false");
+    // fail();
   }
 
   @Test
@@ -46,6 +47,7 @@ public class Test01 {
     String actual = scanner.toString();
     // try-with-resouces で、Scanner(とInputStream）がcloseされる
     assertThat(actual).contains("source closed=true");
+    // fail();
   }
 
 }
