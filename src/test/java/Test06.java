@@ -16,7 +16,7 @@ public class Test06 {
   @DisplayName("of メソッドでイミュータブルなList, Set, Mapなどを作れる")
   void case01() {
     List<String> alphabetList = List.of("a", "b", "c");
-    // イミュータブルなリストなので、要素は変更できない
+    // イミュータブルなリストなので、要素後から変更できない
     // alphabetList.add("z");
 
     Set<String> alphabetSet = Set.of("d", "e", "f");
@@ -41,9 +41,9 @@ public class Test06 {
     mutable.add("b");
     mutable.add("c");
 
-    List<String> imutableCopy = List.copyOf(mutable);
-    // イミュータブルなリストなので、要素は変更できない
+    List<String> immutableCopy = List.copyOf(mutable);
+    // イミュータブルなリストなので、要素を後から変更できない
     // imutableList.add("z");
-    assertThat(imutableCopy).containsExactly("a", "b", "c");
+    assertThat(immutableCopy).containsExactly("a", "b", "c");
   }
 }
